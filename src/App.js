@@ -1,21 +1,45 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
+import React, {  useState, useEffect } from 'react';
+
 import './App.css';
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
-        </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
-    );
-  }
+
+function App() { 
+  const[text,setText] = useState('');
+  const[name,setName] = useState('Love');
+
+  function changeHandler(event){ 
+    setText(event.target.value); 
+    console.log(text); 
+  } 
+  //variation 1 => every Render
+  // useEffect(()=>{
+  //   console.log("UI Rendering Done");
+  // })
+
+  // variation 2 => First Render
+  // useEffect(()=>{
+  //   console.log("UI render done")
+  // },[])
+
+  //variation 4 => First + whenever dependecies changes
+  // useEffect(()=>{
+  //   console.log("Change Observed")
+  // },[name]);
+
+  //Variation 4 => To handle unmounting component
+  useEffect(()=>{
+    //AEL
+    console.log("listener Added");
+
+    return()=>{
+      console.log("listener removed");
+    }
+  },[text]);
+    
+  return ( 
+    <div className="App"> 
+      <input type="text" onChange={changeHandler}></input> 
+    </div> ); 
 }
 
 export default App;
